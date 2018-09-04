@@ -40,8 +40,7 @@ lpm2_kdtree <- function(
                  as.integer( m ),                   # max leaves per node
                  as.integer( algorithm ),           # algorithm to use 
                  as.integer( maxCheck ),            # number of leaves to check
-                 as.double( termDist ),             # terminal distance 
-                 PACKAGE = "BalancedSampling"
+                 as.double( termDist )              # terminal distance 
   )
   
   #return( (1:n)[ r.result[[2]] > .5 ] )
