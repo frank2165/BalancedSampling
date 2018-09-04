@@ -207,7 +207,8 @@ BEGIN_RCPP
 END_RCPP
 }
 
-RcppExport void R_lpm3(void *, void *, void *, void *, void *, void *, void *, void *);
+//RcppExport void R_lpm3(void *, void *, void *, void *, void *, void *, void *, void *);
+RcppExport SEXP R_lpm3_call(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
 
 static const R_CallMethodDef CallEntries[] = {
     {"_BalancedSampling_cube", (DL_FUNC) &_BalancedSampling_cube, 2},
@@ -226,7 +227,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_BalancedSampling_scps", (DL_FUNC) &_BalancedSampling_scps, 2},
     {"_BalancedSampling_spm", (DL_FUNC) &_BalancedSampling_spm, 1},
     {"_BalancedSampling_vsb", (DL_FUNC) &_BalancedSampling_vsb, 3},
-    {"R_lpm3", (DL_FUNC) &R_lpm3, 8},
+    //{"R_lpm3", (DL_FUNC) &R_lpm3, 8},
+	{ "R_lpm3_call", (DL_FUNC)&R_lpm3_call, 8 },
     {NULL, NULL, 0}
 };
 

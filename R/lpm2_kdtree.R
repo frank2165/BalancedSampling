@@ -32,7 +32,7 @@ lpm2_kdtree <- function(
   if( length(prob) != n ) stop(print("Length of probability vector does not match the number of rows in x."))
   
   # send our data to the C program
-  r.result <- .C("R_lpm3",
+  r.result <- .Call("R_lpm3_call",
                  as.double( t(x) ),                 # data we query
                  as.double( prob ),                 # probability vector
                  as.integer( n ),                   # length of prob and nrow of x 
@@ -44,5 +44,6 @@ lpm2_kdtree <- function(
                  PACKAGE = "BalancedSampling"
   )
   
-  return( (1:n)[ r.result[[2]] > .5 ] )
+  #return( (1:n)[ r.result[[2]] > .5 ] )
+  return( (1:n)[ r.result > .5 ] )
 }

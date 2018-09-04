@@ -10,10 +10,14 @@
 #include <math.h>
 
 #include "R.h"
+#include "Rinternals.h"
 #include "Rmath.h"
 #define PRINTF Rprintf
 
 #include "kdtree_lpm.h"
+
+
+void R_lpm3(double*, double*, int*, int*, int*, int*, int*, double*);
 
 
 
@@ -69,6 +73,47 @@ void updateMapping(size_t j,size_t i, size_t * indexMap, size_t * reverseIndexMa
 
   return;
 }
+
+
+
+SEXP R_lpm3_call(
+	SEXP x,
+	SEXP pi,
+	SEXP nPtr,
+	SEXP KPtr,
+	SEXP mPtr,
+	SEXP algorithmPtr,
+	SEXP maxCountPtr,
+	SEXP termDist
+) {
+
+	if (!isReal(x)) error("x must be of type numeric, got ", TYPEOF(x));
+	if (!isReal(pi)) error("pi must be of type numeric, got ", TYPEOF(pi));
+	if (!isReal(termDist)) error("termDist must be of type numeric, got ", TYPEOF(termDist));
+
+	if (!isInteger(nPtr)) error("nPtr must be of type integer, got ", TYPEOF(nPtr));
+	if (!isInteger(KPtr)) error("KPtr must be of type integer, got ", TYPEOF(KPtr));
+	if (!isInteger(mPtr)) error("mPtr must be of type integer, got ", TYPEOF(mPtr));
+	if (!isInteger(algorithmPtr)) error("algorithmPtr must be of type integer, got ", TYPEOF(algorithmPtr));
+	if (!isInteger(maxCountPtr)) error("maxCountPtr must be of type integer, got ", TYPEOF(maxCountPtr));
+
+
+	for (int i = 0; i < *INTEGER(nPtr); i++) {
+		if (ISNA(REAL(pi)[i])) error("NA value found in prob!");
+		for (int j = 0; j < *INTEGER(KPtr); j++) {
+			if (ISNA(REAL(x)[i + j * *INTEGER(nPtr)])) error("NA value found in x!");
+		}
+	}
+
+
+	R_lpm3(REAL(x), REAL(pi), INTEGER(nPtr), INTEGER(KPtr), INTEGER(mPtr), INTEGER(algorithmPtr), INTEGER(maxCountPtr), REAL(termDist));
+
+	return pi;
+}
+
+
+
+
 
 
 
